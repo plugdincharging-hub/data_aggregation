@@ -5,7 +5,6 @@ def data_retrieval(key: str):
     thirty_days_ago = int(
         (datetime.now(timezone.utc) - timedelta(days=30)).timestamp())
     
-
     list_of_payments = []
     params = {
         "limit": 100,
