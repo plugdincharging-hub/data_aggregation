@@ -2,7 +2,6 @@ from datetime import datetime, timedelta, timezone
 import requests
 
 def data_retrieval(key: str):
-
     thirty_days_ago = int(
         (datetime.now(timezone.utc) - timedelta(days=30)).timestamp())
     
@@ -13,7 +12,6 @@ def data_retrieval(key: str):
         "created[gte]": thirty_days_ago}
 
     while True:
-
         intent_response = requests.get("https://api.stripe.com/v1/payment_intents",
         auth=(key, ""),
         params=params,
@@ -30,7 +28,6 @@ def data_retrieval(key: str):
         params["starting_after"] = page["data"][-1]["id"]
 
 def fee_retrieval(charge_id: str, key: str):
-
     '''Gather transaction ID to work out stripe fee'''
 
     transaction_response = requests.get(f"https://api.stripe.com/v1/charges/{charge_id}",
