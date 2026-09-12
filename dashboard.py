@@ -81,6 +81,12 @@ st.dataframe(
     },
 )
 
+st.subheader("Non-returned chargers")
+non_returned_values = transformation.fetch_non_returns()
+non_returns_df = pd.DataFrame(non_returned_values)
+
+st.dataframe(non_returns_df, width="stretch", hide_index=True)
+
 st.download_button(
     "Download CSV",
     data=summary.to_csv(index=False),

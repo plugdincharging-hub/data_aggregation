@@ -1,6 +1,8 @@
 import json
 import warnings
 import api_queries
+import os
+import api_queries as api
 
 def transform(stripe_data: list, key: str):
     formatted_list = []
@@ -38,3 +40,18 @@ def revenue_machine(json_body: list):
     
     json_output = json.dumps(machine_pool, indent=2)
     return json_output
+
+def fetch_non_returns():
+    non_returned_values = []
+    list_of_payments = []
+
+    api_key = os.getenv("STRIPE_API_KEY")
+    if not api_key:
+            raise RuntimeError("Missing PROD_KEY environment variable")
+
+    station_response = api.retrieve_non_returns(api_key, list_of_payments)
+
+    for payment in station_response:
+         if payment.get("description") is not None:
+              non_returned_values.append({"non_returned_id": payment.get("id"), "station_id": payment.get("metadata").get("station_id")})
+    return non_returned_values
