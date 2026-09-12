@@ -81,8 +81,13 @@ st.dataframe(
     },
 )
 
+@st.cache_data(ttl=900)
+def fetch_non_returns():
+    return transformation.fetch_non_returns()
+
+
 st.subheader("Non-returned chargers")
-non_returned_values = transformation.fetch_non_returns()
+non_returned_values = fetch_non_returns()
 non_returns_df = pd.DataFrame(non_returned_values)
 
 st.dataframe(non_returns_df, width="stretch", hide_index=True)
